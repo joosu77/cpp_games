@@ -1,0 +1,1 @@
+g++ -idirafter ../engine/  snake_main.cpp -o snek -lalleg -Wno-write-strings -std=c++0x game.cpp -lalleg ../engine/engine.cpp -lalleg
