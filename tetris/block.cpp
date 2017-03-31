@@ -1,11 +1,8 @@
 #include <chrono>
 #include <vector>
 #include <allegro.h>
-<<<<<<< HEAD
 #include <string>
 #include <iostream>
-=======
->>>>>>> a6e380d... Init
 
 #include "block.h"
 
@@ -32,10 +29,7 @@ std::vector< std::vector<char> > block::create(int xlen, int ylen, std::vector< 
     shape = shape_bag [seconds%7];
     
     shapeInit();
-<<<<<<< HEAD
     fillBlueprint();
-=======
->>>>>>> a6e380d... Init
     return drawTetromino(screen, 0, 0);
 }
 
@@ -48,7 +42,6 @@ std::vector< std::vector<char> > block::drawTetromino(std::vector< std::vector<c
         for (int x=0;x<5;x++){
             int absx = (xloc+x)-3;
             int absy = (yloc+y)-3;
-<<<<<<< HEAD
             bool print = false;
             if (dir == 0 && blueprint[y][x]){
                 //allegro_message("er");
@@ -63,49 +56,27 @@ std::vector< std::vector<char> > block::drawTetromino(std::vector< std::vector<c
             if (print){
                 if (y>4 || x>4 || absx>=xl || absy>=yl || y<0 || x<0 || absx<0 || absy<0){
                     allegro_message("y: %d, x: %d, absy: %d, absx: %d, dir: %d, yloc: %d", y, x, absy, absx, dir, yloc);
-=======
-            
-            if (blueprint[y][x]){
-                if (y>4 || x>4 || absx>xl || absy>yl || y<0 || x<0 || absx<0 || absy<0){
-                    allegro_message("y: %d, x: %d, absy: %d, absx: %d", y, x, absy, absx);
->>>>>>> a6e380d... Init
-                }
+		}
                 if (del){
                     screen [absy][absx] = ground;
                 } else if (deact){
                     screen [absy][absx] = passive_piece;
                 } else {
-<<<<<<< HEAD
-                    //allegro_message("absy: %d, yloc: %d", absy, yloc);
-=======
->>>>>>> a6e380d... Init
                     screen [absy][absx] = active_piece;
                 }
             }
         }
     }
-<<<<<<< HEAD
-    //allegro_message("ender");
-=======
->>>>>>> a6e380d... Init
     return screen;
 }
 
 std::vector< std::vector<char> > block::move(int way, std::vector< std::vector<char> > screen){
-<<<<<<< HEAD
     screen = drawTetromino(screen, 1, 0);
     if (way == 1 && checker(xloc+1, yloc, screen, 0)){
         xloc = xloc+1;
     } else if (way == 2 && checker(xloc, yloc+1, screen, 0)){
         yloc = yloc+1;
         allegro_message("yloc: %d", yloc);
-=======
-    drawTetromino(screen, 1, 0);
-    if (way == 1 && checker(xloc+1, yloc, screen, 0)){
-        xloc = xloc+1;
-    } else if (way == 2 && checker(xloc, yloc-1, screen, 0)){
-        yloc = yloc-1;
->>>>>>> a6e380d... Init
     } else if (way == 3 && checker(xloc-1, yloc, screen, 0)){
         xloc = xloc-1;
     } else if (way == 9 && checker(xloc, yloc, screen, -1)){
@@ -115,17 +86,8 @@ std::vector< std::vector<char> > block::move(int way, std::vector< std::vector<c
     } else {
         return std::vector< std::vector<char> > ();
     }
-<<<<<<< HEAD
-    //drawTetromino(screen, 0, 0);
-    //allegro_message("usfhniusdnf");
     screen = drawTetromino(screen, 0,0);
     
-    
-    
-=======
-    drawTetromino(screen, 0, 0);
-    allegro_message("usfhniusdnf");
->>>>>>> a6e380d... Init
     return screen;
 }
 
@@ -189,15 +151,9 @@ bool block::checker(int nxloc, int xyloc, std::vector< std::vector<char> > scree
             for (int x=0;x<5;x++){
                 int absx = (xloc+x)-3;
                 int absy = (yloc+y)-3;
-<<<<<<< HEAD
                 if (blueprint[y][x] && screen[absy][absx] != passive_piece){
                     return true;
                 }
-=======
-                /*if (blueprint[y][x] && screen[absy][absx] == passive_piece){
-                    return false;
-                }*/
->>>>>>> a6e380d... Init
             }
         }
     } else if ((dir+deltad)==1 && (xloc+dist_up)<xl &&
@@ -206,15 +162,9 @@ bool block::checker(int nxloc, int xyloc, std::vector< std::vector<char> > scree
             for (int x=0;x<5;x++){
                 int absx = (xloc+x)-3;
                 int absy = (yloc+y)-3;
-<<<<<<< HEAD
                 if (blueprint[5-x][y] && screen[absy][absx] != passive_piece){
                     return true;
                 }
-=======
-                /*if (blueprint[x][5-y] && screen[absy][absx] == passive_piece){
-                    return false;
-                }*/
->>>>>>> a6e380d... Init
             }
         }
     } else if ((dir+deltad)==2 && (xloc+dist_left)<xl &&
@@ -223,15 +173,9 @@ bool block::checker(int nxloc, int xyloc, std::vector< std::vector<char> > scree
             for (int x=0;x<5;x++){
                 int absx = (xloc+x)-3;
                 int absy = (yloc+y)-3;
-<<<<<<< HEAD
                 if (blueprint[5-y][5-x] && screen[absy][absx] != passive_piece){
                     return true;
                 }
-=======
-                /*if (blueprint[5-y][5-x] && screen[absy][absx] == passive_piece){
-                    return false;
-                }*/
->>>>>>> a6e380d... Init
             }
         }
     } else if ((dir+deltad)==3 && (xloc+dist_down)<xl &&
@@ -240,7 +184,6 @@ bool block::checker(int nxloc, int xyloc, std::vector< std::vector<char> > scree
             for (int x=0;x<5;x++){
                 int absx = (xloc+x)-3;
                 int absy = (yloc+y)-3;
-<<<<<<< HEAD
                 if (blueprint[x][5-y] && screen[absy][absx] != passive_piece){
                     return true;
                 }
@@ -280,21 +223,4 @@ void block::fillBlueprint(){
         //allegro_message(&tmpstr[i]);
     //}
     allegro_message("dist_up: %d, dist_down: %d", dist_up, dist_down);
-=======
-                /*if (blueprint[5-x][5-y] && screen[absy][absx] == passive_piece){
-                    return false;
-                }*/
-            }
-        }
-    }
-    return true;
-}
-
-void block::fillBlueprint(){
-    for (int y=0;y<5;y++){
-        for (int x=0;x<5;x++){
-            blueprint[y][x] = metaBlueprint[y*6+x];
-        }
-    }
->>>>>>> a6e380d... Init
 }

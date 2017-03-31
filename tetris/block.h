@@ -14,11 +14,7 @@ class block{
         int dist_down;
         int dist_right;
         int dist_left;
-<<<<<<< HEAD
         int blueprint [5][5];
-=======
-        bool blueprint [5][5];
->>>>>>> a6e380d... Init
         int xloc;
         int yloc;
         int xl;
