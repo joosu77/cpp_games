@@ -62,7 +62,11 @@ void game::brainz(){
     }
     std::vector< std::vector<char> > i = tetromino.move(2, vroom.ekraan);
     if (stopped && i == std::vector< std::vector<char> > ()){
+<<<<<<< HEAD
+        cooldown = cooldown+1;
+=======
         cooldown++;
+>>>>>>> a6e380d... Init
     } else {
         cooldown = 0;
         vroom.ekraan = i;
