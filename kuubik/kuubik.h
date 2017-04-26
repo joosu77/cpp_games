@@ -18,6 +18,8 @@ class kuubik{
         void fillABC(std::vector<int>, std::vector<int>);
         char charof(int);
         
+        int* turnLines [6][12];
+        
         /*
         std::vector<int*> a;
         std::vector<int*> b;

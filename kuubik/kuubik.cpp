@@ -9,12 +9,14 @@ kuubik::kuubik(){
     xl = 9;
     vroom.initScreen(xl, yl);
     
+    // taidab ekraani array tyhjusega
     for (int y=0;y<yl;y++){
         for (int x=0;x<xl;x++){
             vroom.ekraan[y][x] = ground;
         }
     }
     
+    // loob kuubi vectori
     for (int i=0;i<6;i++){
         std::vector<std::vector<int>> side;
         for (int o=0;o<3;o++){
@@ -27,6 +29,19 @@ kuubik::kuubik(){
         kuup.push_back(side);
     }
     
+    std::vector<std::vector<std::vector<int> > > lineTable (6)(3)(4);
+    lineTable [0][0] = {1,2,3,5};
+    
+    // kaib labi yhe kylje kolm liiget
+    for (int i=0;i<3;i++){
+        // kaib labi kaks korvutist rida
+        for (int u=0;u<2;u++){
+            // kaib labi yhe rea 4 kylge
+            for (int o=0;o<4;o++){
+                turnLines[0][3*o+i] = kuup[0][][]
+            }
+        }
+    }
 }
 
 void kuubik::run(){
@@ -95,19 +110,22 @@ void kuubik::turn(char macro, bool clock){
 }
 
 void kuubik::sideClockwise(int side){
-    /* transponeeri keeratav külg */
-    for (int i=0;i<3;i++){
-        int temp = kuup[side][1][0];
-        kuup[side][0][0] = kuup[side][2][0];
-        kuup[side][1][0] = kuup[side][2][1];
-        kuup[side][2][0] = kuup[side][2][2];
-        kuup[side][2][1] = kuup[side][1][2];
-        kuup[side][2][2] = kuup[side][0][2];
-        kuup[side][1][2] = kuup[side][0][1];
-        kuup[side][0][2] = kuup[side][0][0];
-        kuup[side][0][1] = temp;
+    /* transponeeri keeratav kylg */
+    {
+        int tempSide [3][3];
+        for (int i=0;i<3;i++){
+            for (int u=0;u<3;u++){
+                tempSide[i][u] = kuup[side][u][i];
+            }
+        }
+        for (int i=0;i<3;i++){
+            for (int u=0;u<3;u++){
+                kuup[side][u][i] = tempSide[u][i];
+            }
+        }
     }
-    
+
+
     std::vector<int> sides (4);
     std::vector<int> dirs (4);
     
