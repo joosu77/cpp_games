@@ -9,7 +9,6 @@ class kuubik{
         engine vroom;
         int xl;
         int yl;
-        std::vector<std::vector<std::vector<int> > > kuup;
         const char ground = ' ';
         
         void scramble();
@@ -17,8 +16,15 @@ class kuubik{
         void sideClockwise(int);
         void fillABC(std::vector<int>, std::vector<int>);
         char charof(int);
-        
-        int* turnLines [6][12];
+
+	// kuubi värvide kirjeldus kus dimensioonid on järgmised
+	// 1 -- kuubi külg
+	// 2 -- rida vastaval küljel
+	// 3 -- veerg vastavas reas
+	// massiivi salvestava väärtus on ruudu värv vahemikus 0-5
+	int kuup[6][3][3];
+	// indeks kus on pointerid igat külge ääristavatele kleepsudele
+	int * rowidx[6][12];
         
         /*
         std::vector<int*> a;
@@ -31,7 +37,7 @@ class kuubik{
         int* c [3];
         int* d [3];
     public:
-        void ekraanile();
+        void ekraanile(char*);
         kuubik();
         void run();
         void turn(char, bool);

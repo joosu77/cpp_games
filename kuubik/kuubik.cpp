@@ -4,6 +4,9 @@
 #include "kuubik.h"
 #include "engine.h"
 
+/**
+ * Tee kuup ja täida iga külg eri värviga
+ **/
 kuubik::kuubik(){
     yl = 12;
     xl = 9;
@@ -16,43 +19,34 @@ kuubik::kuubik(){
         }
     }
     
-    // loob kuubi vectori
+    // loob kuubi maatriksi
     for (int i=0;i<6;i++){
-        std::vector<std::vector<int>> side;
         for (int o=0;o<3;o++){
-            std::vector<int> line;
             for (int u=0;u<3;u++){
-                line.push_back(i);
-            }
-            side.push_back(line);
-        }
-        kuup.push_back(side);
-    }
-    
-    std::vector<std::vector<std::vector<int> > > lineTable (6)(3)(4);
-    lineTable [0][0] = {1,2,3,5};
-    
-    // kaib labi yhe kylje kolm liiget
-    for (int i=0;i<3;i++){
-        // kaib labi kaks korvutist rida
-        for (int u=0;u<2;u++){
-            // kaib labi yhe rea 4 kylge
-            for (int o=0;o<4;o++){
-                turnLines[0][3*o+i] = kuup[0][][]
+                kuup[i][o][u] = i;
             }
         }
     }
+    
+    // täida indeksite massiivid
+    
 }
 
+/**
+ *  Trüki kuup, aja saasi ja lahenda
+ **/
 void kuubik::run(){
     while (true){
         scramble();
-        ekraanile();
+        ekraanile("Sassis");
         lahenda();
-        ekraanile();
+        ekraanile("Lahendatud");
     }
 }
 
+/**
+ * Aja kuup sassi
+ **/
 void kuubik::scramble(){
     for (int i=0;i<10;i++){
         using namespace std::chrono;
@@ -67,11 +61,14 @@ void kuubik::scramble(){
     }
 }
 
+/**
+* Keera kuupi niikaua kuni iga külg on ise värvi
+*/
 void kuubik::lahenda(){
 
 }
 
-void kuubik::ekraanile(){
+void kuubik::ekraanile(char *msg){
     for (int y=0;y<3;y++){
         for (int x=0;x<3;x++){
             vroom.ekraan[y][x+3] = charof(kuup[0][y][x]);
@@ -84,6 +81,8 @@ void kuubik::ekraanile(){
     }
 
     vroom.printScreen();
+    std::cout << msg << "\n";
+
 }
 
 void kuubik::turn(char macro, bool clock){
@@ -125,7 +124,31 @@ void kuubik::sideClockwise(int side){
         }
     }
 
-
+    /* keera küljega piirnev serv */
+    
+    int tmpSide[3];
+    int targetIdx;
+    
+    // jätame esimese külje meelde
+    /*
+    for (int j = 0; j < 3; j++) {
+	tmpSide[j] = *(rowidx[side][j]);
+    }
+    
+    // kopeerime kolmekaupa alustades viimasest
+    for (int i=11; i > 2; i-=3) {
+	
+	for (int j = 0; j < 3; j++) {
+		*(rowidx[side][i+j-3]) = *(rowidx[side][i+j]);
+	}
+    }
+    
+    // kirjutame viimasele külejele meeldejäetud esimese
+    for (int j = 0; j < 3; j++) {
+	*(rowidx[side][9+j]) = tmpSide[j];
+    }    */
+    
+    
     std::vector<int> sides (4);
     std::vector<int> dirs (4);
     
@@ -203,27 +226,27 @@ void kuubik::sideClockwise(int side){
     tmp[0] = kuup[sides[0]][dirTables[0][0]][dirTables[0][3]];
     tmp[1] = kuup[sides[0]][dirTables[0][1]][dirTables[0][4]];
     tmp[2] = kuup[sides[0]][dirTables[0][2]][dirTables[0][5]];
-    ekraanile();
+    ekraanile("tmp salvestatud");
     
     kuup[sides[0]][dirTables[0][0]][dirTables[0][3]] = kuup[sides[1]][dirTables[1][0]][dirTables[1][3]];
     kuup[sides[0]][dirTables[0][1]][dirTables[0][4]] = kuup[sides[1]][dirTables[1][1]][dirTables[1][4]];
     kuup[sides[0]][dirTables[0][2]][dirTables[0][5]] = kuup[sides[1]][dirTables[1][2]][dirTables[1][5]];
-    ekraanile();
+    ekraanile("Keeratud 1/4");
     
     kuup[sides[1]][dirTables[1][0]][dirTables[1][3]] = kuup[sides[2]][dirTables[2][0]][dirTables[2][3]];
     kuup[sides[1]][dirTables[1][1]][dirTables[1][4]] = kuup[sides[2]][dirTables[2][1]][dirTables[2][4]];
     kuup[sides[1]][dirTables[1][2]][dirTables[1][5]] = kuup[sides[2]][dirTables[2][2]][dirTables[2][5]];
-    ekraanile();
+    ekraanile("Keeratud 2/4");
     
     kuup[sides[2]][dirTables[2][0]][dirTables[2][3]] = kuup[sides[2]][dirTables[3][0]][dirTables[3][3]];
     kuup[sides[2]][dirTables[2][1]][dirTables[2][4]] = kuup[sides[2]][dirTables[3][1]][dirTables[3][4]];
     kuup[sides[2]][dirTables[2][2]][dirTables[2][5]] = kuup[sides[2]][dirTables[3][2]][dirTables[3][5]];
-    ekraanile();
+    ekraanile("Keeratud 3/4");
     
     kuup[sides[2]][dirTables[3][0]][dirTables[3][3]] = tmp[0];
     kuup[sides[2]][dirTables[3][1]][dirTables[3][4]] = tmp[1];
     kuup[sides[2]][dirTables[3][2]][dirTables[3][5]] = tmp[2];
-    ekraanile();
+    ekraanile("Keeratud 4/4");
 }
 
 void kuubik::fillABC(std::vector<int> sides, std::vector<int> dirs){

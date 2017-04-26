@@ -2,8 +2,8 @@
 
 int main(){
     kuubik kuubik;
-    kuubik.ekraanile();
+    kuubik.ekraanile("Segamata");
     kuubik.turn('U',true);
-    kuubik.ekraanile();
+    kuubik.ekraanile("Keeratud U, true");
     return 0;
 }
