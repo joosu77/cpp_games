@@ -57,7 +57,12 @@ void kuubik::scramble(){
         
         std::vector<char> moves;
         moves  = {'U','L','F','R','D','B'};
-        turn(moves[mills%6], true);
+	if (mills%22<11){
+	    turn(moves[mills%6], true);
+	} else {
+	    turn(moves[mills%6], false);
+	}
+	std::cout << moves[mills%6] << ((mills%22<11)?"":"'") << " ";
     }
 }
 
@@ -86,43 +91,41 @@ void kuubik::ekraanile(char *msg){
 }
 
 void kuubik::turn(char macro, bool clock){
-    if (clock){
-        switch (macro){
-            case 'U':
-                sideClockwise(0);
-		break;
-            case 'L':
-                sideClockwise(1);
-		break;
-            case 'F':
-                sideClockwise(2);
-		break;
-            case 'R':
-                sideClockwise(3);
-		break;
-            case 'D':
-                sideClockwise(4);
-		break;
-            case 'B':
-                sideClockwise(5);
-		break;
-	    default:
-		std::cout << "ERROR";
-        }
-    } /*else {
-        switch (macro){
-        
-        }
-    }*/
+switch (macro){
+        case 'U':
+	    turnSide(0, clock);
+	    break;
+        case 'L':
+	    turnSide(1, clock);
+	    break;
+        case 'F':
+	    turnSide(2, clock);
+	    break;
+        case 'R':
+	    turnSide(3, clock);
+	    break;
+        case 'D':
+	    turnSide(4, clock);
+	    break;
+        case 'B':
+	    turnSide(5, clock);
+	    break;
+        default:
+	    std::cout << "ERROR";
+    }
 }
 
-void kuubik::sideClockwise(int side){
+void kuubik::turnSide(int side, bool clock){
     /* transponeeri keeratav kylg */
     {
         int tempSide [3][3];
         for (int i=0;i<3;i++){
             for (int u=0;u<3;u++){
-                tempSide[i][u] = kuup[side][2-u][i];
+		if (clock){
+		    tempSide[i][u] = kuup[side][2-u][i];
+		} else {
+		    tempSide[2-i][u] = kuup[side][u][i];
+		}
             }
         }
         for (int i=0;i<3;i++){
@@ -138,22 +141,32 @@ void kuubik::sideClockwise(int side){
     
     // jätame esimese külje meelde
     for (int j = 0; j < 3; j++) {
-	tmpSide[j] = *(rowidx[side][j]);
+	if (clock){
+	    tmpSide[j] = *(rowidx[side][j]);
+	} else {
+	    tmpSide[j] = *(rowidx[side][9+j]);
+	}
     }
     
     // kopeerime kolmekaupa alustades viimasest
     for (int i=3; i < 12; i+=3) {
 	
 	for (int j = 0; j < 3; j++) {
-		*(rowidx[side][i+j-3]) = *(rowidx[side][i+j]);
-		ekraanile("samm");
+		if (clock){
+		    *(rowidx[side][i+j-3]) = *(rowidx[side][i+j]);
+		} else {
+		   *(rowidx[side][(9-i)+j+3]) = *(rowidx[side][(9-i)+j]);
+		}
 	}
     }
     
     // kirjutame viimasele külejele meeldejäetud esimese
     for (int j = 0; j < 3; j++) {
-	*(rowidx[side][9+j]) = tmpSide[j];
-    	ekraanile("samm");
+	if (clock){
+	    *(rowidx[side][9+j]) = tmpSide[j];
+	} else {
+	    *(rowidx[side][j]) = tmpSide[j];
+	}
     }
 }
 

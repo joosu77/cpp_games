@@ -11,9 +11,7 @@ class kuubik{
         int yl;
         const char ground = ' ';
         
-        void scramble();
-        void lahenda();
-        void sideClockwise(int);
+        void turnSide(int,bool);
         void fillRowID();
         char charof(int);
 
@@ -24,13 +22,26 @@ class kuubik{
 	// massiivi salvestava väärtus on ruudu värv vahemikus 0-5
 	int kuup[6][3][3];
 	// indeks kus on pointerid igat külge ääristavatele kleepsudele
-	int* rowidx[6][12];
-
+	int * rowidx[6][12];
+        
+        /*
+        std::vector<int*> a;
+        std::vector<int*> b;
+        std::vector<int*> c;
+        std::vector<int*> d;
+        */
+        int* a [3];
+        int* b [3];
+        int* c [3];
+        int* d [3];
     public:
-        void ekraanile(char *);
-        kuubik();
+        void ekraanile(char*);
+        
+    kuubik();
         void run();
         void turn(char, bool);
+        void scramble();
+        void lahenda();
 };
 
 #endif
