@@ -14,7 +14,7 @@ class kuubik{
         void scramble();
         void lahenda();
         void sideClockwise(int);
-        void fillABC(std::vector<int>, std::vector<int>);
+        void fillRowID();
         char charof(int);
 
 	// kuubi värvide kirjeldus kus dimensioonid on järgmised
@@ -24,20 +24,10 @@ class kuubik{
 	// massiivi salvestava väärtus on ruudu värv vahemikus 0-5
 	int kuup[6][3][3];
 	// indeks kus on pointerid igat külge ääristavatele kleepsudele
-	int * rowidx[6][12];
-        
-        /*
-        std::vector<int*> a;
-        std::vector<int*> b;
-        std::vector<int*> c;
-        std::vector<int*> d;
-        */
-        int* a [3];
-        int* b [3];
-        int* c [3];
-        int* d [3];
+	int* rowidx[6][12];
+
     public:
-        void ekraanile(char*);
+        void ekraanile(char *);
         kuubik();
         void run();
         void turn(char, bool);
