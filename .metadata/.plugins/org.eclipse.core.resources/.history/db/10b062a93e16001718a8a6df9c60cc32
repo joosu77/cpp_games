@@ -7,7 +7,7 @@ CPPFLAGS = -idirafter ../engine/ -Wno-write-strings -std=c++0x
 LDFLAGS = -lalleg 
 OBJS = snake_main.o game.o engine.o
 
-all: $(PROG)
+all: snake
 
 $(PROG) : $(OBJS)
 	$(CC) -o $(PROG) $(OBJS) $(LDFLAGS)

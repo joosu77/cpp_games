@@ -26,7 +26,7 @@ std::vector< std::vector<char> > block::create(int xlen, int ylen, std::vector< 
     auto epoch = high_resolution_clock::from_time_t(0);
     auto now   = high_resolution_clock::now();
     auto seconds = duration_cast<milliseconds>(now - epoch).count();
-    shape = shape_bag [seconds%7];
+    shape = shape_bag [seconds%6];
     
     shapeInit();
     fillBlueprint();
