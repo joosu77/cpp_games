@@ -8,8 +8,9 @@ randgen::randgen(){
     auto now   = high_resolution_clock::now();
     auto seconds = duration_cast<milliseconds>(now - epoch).count();
     seed = seconds;
+    
 }
 
-randgen::gitrandom(){
-
+int randgen::gitrandom(){
+    
 }

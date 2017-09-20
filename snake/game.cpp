@@ -36,13 +36,28 @@ game::game(){
 }
 
 void game::run(){
-	while (true){
-		vroom.getInput();
-		brainz();
-		move();
-		vroom.printScreen();
-		wait(1000/vroom.FPS);
+    menu();
+    while (true){
+	vroom.getInput();
+	brainz();
+	move();
+	vroom.printScreen();
+	wait(1000/vroom.FPS);
     }
+}
+
+void game::menu(){
+    pre = false;
+    while (key[KEY_ENTER] != true){
+        vroom.getInput();
+        brainz();
+        move();
+        vroom.printScreen();
+        std::cout << "PRESS 'ENTER' TO START";
+        wait(1000/vroom.FPS);
+    }    
+    pre = true;
+    vroom.score = 0;
 }
 
 void game::brainz(){
@@ -142,17 +157,8 @@ void game::move(){
         }
         vroom.ekraan[pilly][pillx] = pill;
     }
-    if (direction == 'u' && yloc<(vroom.ylen-1)){
-        yloc = yloc + 1;
-    } else if (direction == 'r' && xloc<(vroom.ylen-1)){
-        xloc = xloc + 1;
-    } else if (direction == 'd' && yloc>0){
-        yloc = yloc - 1;
-    } else if (direction == 'l' && xloc>0){
-        xloc = xloc - 1; 
-    } else {
-        exit(0);
-    }
+    
+    actualMove(direction);
     
     bool surm = false;
     for (int i=0; i<lasty.size(); i++){
@@ -167,6 +173,32 @@ void game::move(){
     lastx.push_back(xloc);
     lasty.push_back(yloc);
     vroom.ekraan[yloc][xloc] = player;
+}
+
+void game::actualMove(char dir){
+    if (pre){
+        if (dir == 'u' && yloc<(vroom.ylen-1)){
+            yloc = yloc + 1;
+        } else if (dir == 'r' && xloc<(vroom.ylen-1)){
+            xloc = xloc + 1;
+        } else if (dir == 'd' && yloc>0){
+            yloc = yloc - 1;
+        } else if (dir == 'l' && xloc>0){
+            xloc = xloc - 1; 
+        } else {
+            exit(0);
+        }
+    } else if (!pre && key[KEY_X]){
+        if (dir == 'u' && yloc<(vroom.ylen-1)){
+            yloc = yloc + 1;
+        } else if (dir == 'r' && xloc<(vroom.ylen-1)){
+            xloc = xloc + 1;
+        } else if (dir == 'd' && yloc>0){
+            yloc = yloc - 1;
+        } else if (dir == 'l' && xloc>0){
+            xloc = xloc - 1; 
+        } 
+    }
 }
 
 void game::wait(long milliSeconds){

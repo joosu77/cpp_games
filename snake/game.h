@@ -9,6 +9,8 @@ class game{
         void brainz();
         void move();
         void wait(long);
+        void actualMove(char);
+        void menu();
         
         engine vroom;
         
@@ -24,6 +26,8 @@ class game{
 
 	bool eat;
 	bool arrows;
+	
+	bool pre;
 
 	static char const ground = ' ';
 	static char const player = 'M';
