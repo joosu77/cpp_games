@@ -36,12 +36,13 @@ game::game(){
 }
 
 void game::run(){
-    menu();
+    //menu();
     while (true){
 	vroom.getInput();
 	brainz();
 	move();
 	vroom.printScreen();
+	std::cout << "hi";
 	wait(1000/vroom.FPS);
     }
 }
@@ -61,52 +62,23 @@ void game::menu(){
 }
 
 void game::brainz(){
-    if (vroom.joyst){
-        if (arrows){
-            if (vroom.xstick<0 && (direction != 'r')){
-                direction = 'l';
-            } else if (vroom.xstick>0 && (direction != 'l')){
-                direction = 'r';
-            }
-            if (vroom.ystick<0 && (direction != 'u')){
-                direction = 'd';
-            } else if (vroom.ystick>0 && (direction != 'd')){
-                direction = 'u';
-            }
-        } else {
-            if (vroom.buttons[0] && (direction != 'u')){
-                direction = 'd';
-            } else if (vroom.buttons[2] && (direction != 'd')){
-                direction = 'u';
-            }
-            if (vroom.buttons[1] && (direction != 'l')){
-                direction = 'r';
-            } else if (vroom.buttons[3] && (direction != 'r')){
-                direction = 'l';
-            }
-        }
-        if (vroom.buttons[4] && vroom.FPS>0.5){
-            vroom.FPS=vroom.FPS-0.5;
-        } else if (vroom.buttons[5]) {
-            vroom.FPS=vroom.FPS+0.5;
-        }
-        if (vroom.buttons[8]){
-            arrows = true;
-        } else if (vroom.buttons[9]){
-            arrows = false;
-        }
-    } else {
-        if (key[KEY_UP] && (direction != 'u')){
-                direction = 'd';
-            } else if (key[KEY_DOWN] && (direction != 'd')){
-                direction = 'u';
-            }
-            if (key[KEY_RIGHT] && (direction != 'l')){
-                direction = 'r';
-            } else if (key[KEY_LEFT] && (direction != 'r')){
-                direction = 'l';
-            }
+    if (((vroom.xstick<0) || (vroom.buttons[3]) || (key[KEY_LEFT])) && (direction != 'r')){
+        direction = 'l';
+    } else if (((vroom.xstick>0) || (vroom.buttons[1]) || (key[KEY_RIGHT])) && (direction != 'l')){
+        direction = 'r';
     }
+    if (((vroom.ystick<0) || (vroom.buttons[0]) || (key[KEY_UP])) && (direction != 'u')){
+        direction = 'd';
+    } else if (((vroom.ystick>0) || (vroom.buttons[2]) || (key[KEY_DOWN])) && (direction != 'd')){
+        direction = 'u';
+    }
+    
+    if (vroom.buttons[4] && vroom.FPS>0.5){
+        vroom.FPS=vroom.FPS-0.5;
+    } else if (vroom.buttons[5]) {
+        vroom.FPS=vroom.FPS+0.5;
+    }
+
     if (pillx == xloc && pilly == yloc && eat == false){
         vroom.score = vroom.score+1;
         vroom.FPS = vroom.FPS + 0.1;
@@ -188,7 +160,7 @@ void game::actualMove(char dir){
         } else {
             exit(0);
         }
-    } else if (!pre && key[KEY_X]){
+    } else {
         if (dir == 'u' && yloc<(vroom.ylen-1)){
             yloc = yloc + 1;
         } else if (dir == 'r' && xloc<(vroom.ylen-1)){
